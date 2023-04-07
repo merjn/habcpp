@@ -1,16 +1,16 @@
 #include "AuthCtrl.h"
-#include "usecases/Login.h" 
+#include "services/Login.h" 
 
 void AuthCtrl::login(const HttpRequestPtr& req,
     std::function<void(const HttpResponsePtr&)>&& callback,
     const std::string& username,
     const std::string& password)
 {    
-    Login login_service;
+    Login loginService;
     
     Json::Value json;
     try {
-        json["token"] = login_service.login(username, password);
+        json["token"] = loginService.login(username, password);
 
         callback(HttpResponse::newHttpJsonResponse(json));
     } catch (const std::string& error_message) {

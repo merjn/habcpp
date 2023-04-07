@@ -29,7 +29,9 @@ add_executable(${PROJECT_NAME} main.cc)
 #
 # and comment out the following lines
 find_package(Drogon CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon)
+find_package(unofficial-sodium CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon PRIVATE unofficial-sodium::sodium)
+
 
 # ##############################################################################
 
@@ -48,7 +50,7 @@ aux_source_directory(controllers CTL_SRC)
 aux_source_directory(filters FILTER_SRC)
 aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
-aux_source_directory(usecases USECASES_SRC)
+aux_source_directory(services SERVICES_SRC)
 
 drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
                     ${CMAKE_CURRENT_BINARY_DIR})
@@ -70,7 +72,7 @@ target_sources(${PROJECT_NAME}
                ${FILTER_SRC}
                ${PLUGIN_SRC}
                ${MODEL_SRC}
-               ${USECASES_SRC})
+               ${SERVICES_SRC})
 
 # ##############################################################################
 # uncomment the following line for dynamically loading views 
