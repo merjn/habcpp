@@ -3,11 +3,13 @@
 #include <drogon/drogon.h>
 #include <drogon/orm/Result.h>
 #include <sodium/crypto_pwhash.h>
+#include "AuthException.cc"
 
 std::string Login::login(const std::string& username, const std::string& password)
 {
-	if (username.length() == 0 || password.length() == 0) {
-		throw std::string("Username or password is too small");
+	if (username.length() == 0 || password.length() == 0)
+	{
+		throw AuthException("Username or password is too short");
 	}
 
 	auto clientPtr = drogon::app().getDbClient();
@@ -15,16 +17,16 @@ std::string Login::login(const std::string& username, const std::string& passwor
 
 	if (result.affectedRows() != 1)
 	{
-		throw std::string("Username or password is invalid");
+		throw AuthException("Username or password is invalid");
 	}
 
 	for (auto& row : result)
 	{
 		const auto dbUser = row["username"].as<std::string>();
-		const auto dbPassword = row["password"].as<char*>();
+		const auto dbPassword = row["password"].as<std::string>();
 
-		if (crypto_pwhash_str_verify(dbPassword, password.c_str(), password.length()) != 0) {
-			throw std::string("Username or password is invalid");
+		if (crypto_pwhash_str_verify(dbPassword.c_str(), password.c_str(), password.length()) != 0) {
+			throw AuthException("Username or password is invalid");
 		}
 	}
 
