@@ -3,7 +3,7 @@
 #include <drogon/drogon.h>
 #include <drogon/orm/Result.h>
 #include <sodium/crypto_pwhash.h>
-#include "AuthException.cc"
+#include "AuthException.h"
 
 std::string Login::login(const std::string& username, const std::string& password)
 {

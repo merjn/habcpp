@@ -1,5 +1,6 @@
 #include "Auth.h"
-#include "services/Login.h" 
+#include "services/auth/Login.h" 
+#include "services/auth/AuthException.h"
 
 void Auth::login(const HttpRequestPtr& req,
     std::function<void(const HttpResponsePtr&)>&& callback,
@@ -13,8 +14,8 @@ void Auth::login(const HttpRequestPtr& req,
         json["token"] = loginService.login(username, password);
 
         callback(HttpResponse::newHttpJsonResponse(json));
-    } catch (const std::string& error_message) {
-        json["error"] = error_message;
+    } catch (const AuthException& ex) {
+        json["error"] = ex.what();
 
         callback(HttpResponse::newHttpJsonResponse(json));
     }

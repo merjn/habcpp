@@ -14,7 +14,6 @@ int main() {
     // TODO: Make this a relative path - this is stupid as fuck. 
     drogon::app().loadConfigFile("C:\\Users\\Merijn\\Desktop\\Habcpp\\config.json");
 
-    //Run HTTP framework,the method will block in the internal event loop
     drogon::app().run();
     return 0;
 }

@@ -51,6 +51,7 @@ aux_source_directory(filters FILTER_SRC)
 aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
 aux_source_directory(services SERVICES_SRC)
+aux_source_directory(services/auth SERVICES_AUTH_SRC)
 
 drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
                     ${CMAKE_CURRENT_BINARY_DIR})
@@ -72,6 +73,7 @@ target_sources(${PROJECT_NAME}
                ${FILTER_SRC}
                ${PLUGIN_SRC}
                ${MODEL_SRC}
+               ${SERVICES_AUTH_SRC}
                ${SERVICES_SRC})
 
 # ##############################################################################

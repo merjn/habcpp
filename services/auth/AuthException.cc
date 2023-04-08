@@ -1,14 +1,8 @@
-#include <iostream>
+#include "AuthException.h"
 
+AuthException::AuthException(std::string&& msg) : message(std::move(msg)) { }
 
-class AuthException : public std::exception
+const char* AuthException::what() const noexcept
 {
-private:
-	std::string message;
-public:
-	AuthException(std::string&& msg) : message(msg) { }
-
-	const char* what() const noexcept override {
-		return message.c_str();
-	}
-};
+	return message.c_str();
+}
