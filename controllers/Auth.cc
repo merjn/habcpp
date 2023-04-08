@@ -1,7 +1,7 @@
-#include "AuthCtrl.h"
+#include "Auth.h"
 #include "services/Login.h" 
 
-void AuthCtrl::login(const HttpRequestPtr& req,
+void Auth::login(const HttpRequestPtr& req,
     std::function<void(const HttpResponsePtr&)>&& callback,
     const std::string& username,
     const std::string& password)

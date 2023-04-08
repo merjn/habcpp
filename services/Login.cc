@@ -11,7 +11,12 @@ std::string Login::login(const std::string& username, const std::string& passwor
 	}
 
 	auto clientPtr = drogon::app().getDbClient();
-	auto result = clientPtr->execSqlAsyncFuture("select * from users where username = ?", username).get();
+	auto result = clientPtr->execSqlAsyncFuture("select username,password from users where username = ?", username).get();
+
+	if (result.affectedRows() != 1)
+	{
+		throw std::string("Username or password is invalid");
+	}
 
 	for (auto& row : result)
 	{

@@ -5,11 +5,11 @@
 
 using namespace drogon;
 
-class AuthCtrl : public drogon::HttpController<AuthCtrl>
+class Auth : public drogon::HttpController<Auth>
 {
   public:
       METHOD_LIST_BEGIN
-      METHOD_ADD(AuthCtrl::login, "/login?username={1}&password={2}", Post);
+      METHOD_ADD(Auth::login, "/login?username={1}&password={2}", Post);
       METHOD_LIST_END
 
       void login(const HttpRequestPtr& req,
