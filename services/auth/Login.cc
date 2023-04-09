@@ -4,6 +4,7 @@
 #include <drogon/orm/Result.h>
 #include <sodium/crypto_pwhash.h>
 #include "AuthException.h"
+#include "jwt/jwt.hpp"
 
 std::string Login::login(const std::string& username, const std::string& password)
 {
@@ -30,8 +31,18 @@ std::string Login::login(const std::string& username, const std::string& passwor
 		}
 	}
 
-	// Generate a JWT token for this user
+	// The process of allocating a new JWT object to the stack and retrieving the key can easily
+	// be done in a separate singleton instance. However, let's just make the following work and refactor
+	// it when there's a minimum viable product.
+	const auto key = drogon::app().getCustomConfig().get("jwt_secret", "").as<std::string>();
+	if (key == "")
+	{
+		throw AuthException("JWT secret is undefined");
+	}
 
+	using namespace jwt::params;
 
-	return std::string("jwt token here");
+	jwt::jwt_object obj{ algorithm("HS256"), payload({ {"username", username}}), secret(key) };
+
+	return obj.signature();
 }

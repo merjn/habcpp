@@ -30,7 +30,8 @@ add_executable(${PROJECT_NAME} main.cc)
 # and comment out the following lines
 find_package(Drogon CONFIG REQUIRED)
 find_package(unofficial-sodium CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon PRIVATE unofficial-sodium::sodium)
+find_package(cpp-jwt CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon PRIVATE unofficial-sodium::sodium PRIVATE cpp-jwt::cpp-jwt)
 
 
 # ##############################################################################
