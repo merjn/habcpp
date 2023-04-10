@@ -19,7 +19,7 @@ endif ()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(${PROJECT_NAME} main.cc)
+add_executable(${PROJECT_NAME} main.cc "controllers/Register.h" "viewmodels/RegisterViewModel.h" "exceptions/ValidationException.h")
 
 # ##############################################################################
 # If you include the drogon source code locally in your project, use this method
@@ -53,6 +53,8 @@ aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
 aux_source_directory(services SERVICES_SRC)
 aux_source_directory(services/auth SERVICES_AUTH_SRC)
+aux_source_directory(viewmodels VIEWMODELS_SRC)
+aux_source_directory(exceptions EXCEPTIONS_SRC)
 
 drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
                     ${CMAKE_CURRENT_BINARY_DIR})
@@ -75,6 +77,8 @@ target_sources(${PROJECT_NAME}
                ${PLUGIN_SRC}
                ${MODEL_SRC}
                ${SERVICES_AUTH_SRC}
+               ${EXCEPTIONS_SRC}
+               ${VIEWMODELS_SRC}
                ${SERVICES_SRC})
 
 # ##############################################################################
